@@ -47,7 +47,6 @@ daily_fields_list = ['website_id', 'url', 'c_name', 'country', 'language', 'rema
 all_fields_list = ['website_id', 'url', 'c_name', 'country', 'language', 'remark', 'developer', 'start_time',
                    'news_amount']
 
-
 def daily():
     '''
     每日统计数据生成逻辑
@@ -57,6 +56,12 @@ def daily():
     data = [daily_fields_list]
     sum = 0
     data1 = news_db.select(daily_sql.format(time_yesterday))
+    if len(data1) < 5:
+        file_ = file.format(time_yesterday)
+        subject = '数据部昨日数据异常！ {}'.format(time_yesterday)
+        message = Mail(sender=sender, receivers=receivers, passwd=passwd, smtp=smtp, subject=subject, text="Error!")
+        message.attach_file(file_)
+        message.send()
     for i in data1:
         data2 = list(common_db.select(daily_common_sql.format(i[0]))[0])
         sum += i[1]
