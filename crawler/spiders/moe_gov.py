@@ -58,3 +58,4 @@ class moeSpider(BaseSpider):
         item['pub_time'] = response.meta['pub_time']
         item['images'] = None
         yield item
+

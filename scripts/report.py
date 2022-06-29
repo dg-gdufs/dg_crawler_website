@@ -56,7 +56,7 @@ def daily():
     data = [daily_fields_list]
     sum = 0
     data1 = news_db.select(daily_sql.format(time_yesterday))
-    if len(data1) < 5:
+    if len(data1) < 5:  # 数据量过少
         file_ = file.format(time_yesterday)
         subject = '数据部昨日数据异常！ {}'.format(time_yesterday)
         message = Mail(sender=sender, receivers=receivers, passwd=passwd, smtp=smtp, subject=subject, text="Error!")
